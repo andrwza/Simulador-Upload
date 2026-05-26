@@ -1,0 +1,404 @@
+/* ── Reset ─────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+    --bg:          #f0f4f8;        /* cinza-azulado claro */
+    --white:       #ffffff;
+    --surface:     #e8eef5;
+    --border:      #c5d2e0;
+    --text:        #1a2535;
+    --muted:       #6b7f96;
+    --accent:      #2563eb;        /* azul vivo */
+    --accent-light:#dbeafe;
+    --accent-dark: #1d4ed8;
+    --success:     #16a34a;
+    --success-bg:  #dcfce7;
+    --success-bd:  #86efac;
+    --bar-bg:      #dde5ef;
+    --bar-fill:    #2563eb;
+    --radius:      20px;
+    --radius-sm:   12px;
+    --font:        'Jost', sans-serif;
+    --fs-base:     1.1rem;         /* fonte maior para apresentação */
+}
+
+body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font);
+    font-size: var(--fs-base);
+    min-height: 100vh;
+}
+
+/* ── Layout 3 colunas ──────────────────────────────── */
+main {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    align-items: stretch;
+}
+
+.section-left,
+.section-right {
+    flex: 0 0 30%;
+    padding: 28px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+}
+
+.section-center {
+    flex: 1;
+    padding: 28px 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    position: relative;
+    border-left: 1.5px solid var(--border);
+    border-right: 1.5px solid var(--border);
+}
+
+/* ── Títulos ───────────────────────────────────────── */
+.page-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--text);
+    position: absolute;
+    top: 28px;
+    letter-spacing: -0.01em;
+}
+
+.col-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--text);
+    align-self: flex-start;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.badge-title {
+    font-size: 0.8rem;
+    font-weight: 600;
+    background: var(--accent);
+    color: #fff;
+    padding: 3px 11px;
+    border-radius: 999px;
+}
+
+/* ── Container da fila (esquerda) ──────────────────── */
+.container-fila {
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--white);
+    width: 100%;
+    flex: 1;
+    padding: 20px 18px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 16px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+}
+
+/* Cards da fila */
+.cards {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    flex: 1;
+    overflow-y: auto;
+}
+
+/* Card individual */
+.card-arquivo-fila {
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 12px 14px;
+    background: var(--surface);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    transition: border-color 0.2s, background 0.2s;
+    animation: entrar 0.25s ease;
+}
+
+.card-arquivo-fila.ativo {
+    border-color: var(--accent);
+    background: var(--accent-light);
+}
+
+@keyframes entrar {
+    from { opacity: 0; transform: translateY(-6px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Cabeçalho do card: número + nome + tag */
+.card-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.card-num {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--muted);
+    background: var(--bar-bg);
+    border-radius: 6px;
+    padding: 2px 8px;
+    flex-shrink: 0;
+}
+
+.card-arquivo-fila.ativo .card-num {
+    background: var(--accent);
+    color: #fff;
+}
+
+.card-nome {
+    font-size: 1rem;
+    font-weight: 500;
+    flex: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.card-tag {
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 999px;
+    border: 1.5px solid var(--border);
+    background: var(--white);
+    color: var(--muted);
+    flex-shrink: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.card-arquivo-fila.ativo .card-tag {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+}
+
+/* Barra de progresso dentro do card */
+.barra-progresso {
+    width: 100%;
+    height: 18px;
+    background: var(--bar-bg);
+    border-radius: 999px;
+    overflow: hidden;
+}
+
+.barra-fill {
+    height: 100%;
+    background: var(--bar-fill);
+    width: 0%;
+    border-radius: 999px;
+    transition: width 0.12s linear;
+}
+
+/* Botão processar */
+.btn-processar {
+    width: 100%;
+    padding: 14px;
+    font-family: var(--font);
+    font-size: 1rem;
+    font-weight: 600;
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+    letter-spacing: 0.02em;
+}
+
+.btn-processar:hover  { background: var(--accent-dark); }
+.btn-processar:active { transform: scale(0.98); }
+.btn-processar:disabled {
+    background: var(--bar-bg);
+    color: var(--muted);
+    cursor: not-allowed;
+}
+
+/* ── Container upload (centro) ─────────────────────── */
+.container-upload {
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--white);
+    width: 100%;
+    max-width: 400px;
+    padding: 32px 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    align-items: center;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+}
+
+.upload-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: 2px solid var(--border);
+    background: var(--accent-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.6rem;
+    color: var(--accent);
+}
+
+.upload-hint {
+    font-size: 0.95rem;
+    color: var(--muted);
+    text-align: center;
+    line-height: 1.5;
+}
+
+.upload-hint strong { color: var(--text); }
+
+/* Input */
+.input-row { width: 100%; }
+
+.input-row input {
+    width: 100%;
+    background: var(--surface);
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-sm);
+    color: var(--text);
+    font-family: var(--font);
+    font-size: 1rem;
+    padding: 12px 16px;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.input-row input::placeholder { color: var(--muted); }
+.input-row input:focus { border-color: var(--accent); }
+
+/* Botão adicionar */
+.btn-adicionar {
+    width: 100%;
+    padding: 13px;
+    font-family: var(--font);
+    font-size: 1rem;
+    font-weight: 600;
+    background: var(--white);
+    color: var(--accent);
+    border: 2px solid var(--accent);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+}
+
+.btn-adicionar:hover {
+    background: var(--accent-light);
+}
+
+/* Status */
+.status-box {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    padding: 10px 14px;
+    border-radius: var(--radius-sm);
+    background: var(--surface);
+    border: 1.5px solid var(--border);
+    font-size: 0.95rem;
+    color: var(--muted);
+}
+
+.status-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--muted);
+    flex-shrink: 0;
+    transition: background 0.3s;
+}
+
+.status-dot.processando {
+    background: var(--accent);
+    animation: pulsar 1s infinite;
+}
+
+.status-dot.concluido { background: var(--success); }
+
+@keyframes pulsar {
+    0%,100% { opacity: 1; }
+    50%      { opacity: 0.25; }
+}
+
+/* ── Container histórico (direita) ─────────────────── */
+.container-historico {
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--white);
+    width: 100%;
+    flex: 1;
+    padding: 18px;
+    overflow-y: auto;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+}
+
+/* Card do histórico */
+.card-historico {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 14px;
+    border-radius: var(--radius-sm);
+    background: var(--success-bg);
+    border: 1.5px solid var(--success-bd);
+    margin-bottom: 10px;
+    animation: entrar 0.3s ease;
+}
+
+.hist-num {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--success);
+    background: #fff;
+    border: 1.5px solid var(--success-bd);
+    border-radius: 8px;
+    padding: 2px 9px;
+    flex-shrink: 0;
+}
+
+.hist-check {
+    font-size: 1.1rem;
+    color: var(--success);
+    flex-shrink: 0;
+}
+
+.hist-nome {
+    flex: 1;
+    font-size: 0.95rem;
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.hist-hora {
+    font-size: 0.78rem;
+    color: var(--muted);
+    flex-shrink: 0;
+}
+
+/* Mensagem vazia */
+.empty-msg {
+    font-size: 0.95rem;
+    color: var(--muted);
+    text-align: center;
+    padding: 2.5rem 0;
+}

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulador de Upload - Fila</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style2.css">
+</head>
+<body>
+<main>
+
+    <!-- ══ ESQUERDA: fila de arquivos ══ -->
+    <section class="section-left">
+        <h2 class="col-title">Fila de Uploads</h2>
+
+        <div class="container-fila">
+
+            <!-- Cards gerados pelo JS vão aqui -->
+            <div class="cards" id="cards-fila">
+                <p class="empty-msg" id="fila-vazia">Nenhum arquivo na fila</p>
+            </div>
+
+            <button class="btn-processar" onclick="processarUpload()">
+                ▶ Processar Upload
+            </button>
+        </div>
+    </section>
+
+    <!-- ══ CENTRO: formulário ══ -->
+    <section class="section-center">
+        <h1 class="page-title">Simulador de Upload - Fila</h1>
+
+        <div class="container-upload">
+            <p class="upload-hint">Insira o nome do arquivo e clique em <strong>Adicionar à Fila</strong></p>
+
+            <div class="input-row">
+                <input type="text" id="arquivo" placeholder="ex: relatorio.pdf" autocomplete="off">
+            </div>
+            <button class="btn-adicionar" onclick="adicionarUpload()">+ Adicionar à Fila</button>
+
+            <div class="status-box">
+                <div class="status-dot" id="status-dot"></div>
+                <span id="status-msg">Aguardando Arquivos para a Fila...</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- ══ DIREITA: histórico ══ -->
+    <section class="section-right">
+        <h2 class="col-title">Histórico <span class="badge-title" id="badge-done">0</span></h2>
+
+        <div class="container-historico">
+            <div id="lista-processados">
+                <p class="empty-msg" id="done-vazio">Nenhum arquivo processado</p>
+            </div>
+        </div>
+    </section>
+
+</main>
+<script src="script2.js"></script>
+</body>
+</html>
