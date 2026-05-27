@@ -1,83 +1,79 @@
-// ================================================================
 //  FILA — baseada no conceito em C
-//  Estrutura: dados[], inicio, fim
-// ================================================================
-
+// Criando uma fila com dados, com um começo e fim
 let fila = {
-    dados: [],
-    inicio: 0,
-    fim: -1
+    dados: [], // Onde os arquivos vão ficar guardados
+    inicio: 0, // Indica "aponta" para o primeiro item da fila
+    fim: -1 // Indica o último item da fila (-1 porque ainda não tem nenhum elemento dentro dele)
 };
 
+// Função para zerar a fila, para voltar para o estado incial
 function inicializarFila() {
     fila.inicio = 0;
     fila.fim = -1;
 }
 
-// Verifica se a fila está vazia
+// Função para verificar se a fila está vazia 
 function filaVazia() {
-    return fila.inicio > fila.fim;
-}
+    return fila.inicio > fila.fim; // Se o início passar do final, não tem nada na fila
+} // Retorna True - Está vazia ou False - Tem itens
 
-// Adiciona elemento no fim da fila (enqueue)
+// Adiciona um item no final da fila
 function enfileirar(valor) {
-    fila.fim++;
-    fila.dados[fila.fim] = valor;
+    fila.fim++; // Anda uma posição
+    fila.dados[fila.fim] = valor; // Guarda o valor nessa posição
 }
 
-// Remove e retorna o elemento do início da fila (dequeue)
+// Se a fila estiver vazia
 function desenfileirar() {
-    if (filaVazia()) return null;
-    let valor = fila.dados[fila.inicio];
-    fila.inicio++;
-    return valor;
+    if (filaVazia()) return null; // Não tem o que tirar, então retorna NULL
+    let valor = fila.dados[fila.inicio]; // Pega o primerio item da fila (o mais antigo da fila) 
+    fila.inicio++; // Move o início para fretne 
+    return valor; // Retorna o valor que foi removido 
 }
 
-// ================================================================
-//  Estado da interface
-// ================================================================
+//  Controle da Interface
+let processando = false;   // Processametno - Mostra o upload do arquivo
+let totalDone   = 0;       // Conta quantos arquivos já formam conclídos 
 
-let processando = false;   // trava: só 1 arquivo por vez
-let totalDone   = 0;       // contador global de concluídos
-
-// ================================================================
-//  Adicionar arquivo à fila (botão central)
-// ================================================================
+//  Essa função é chamada quando o usuário manda um arquivo 
 function adicionarUpload() {
-    const input = document.getElementById("arquivo");
-    const nome  = input.value.trim();
+    const input = document.getElementById("arquivo"); // Coleta o campo onde o usuário digitou o nome 
+    const nome  = input.value.trim(); // Remove os espeçços 
 
-    if (nome === "") {
-        alert("Digite o nome do arquivo");
+    if (nome === "") { // Caso o usuário tente realizar o upload sem arquivos no campo // ACREDITO QUE SEJA OPCIONAL
+        alert("Digite o nome do arquivo"); // Recebe alerta 
         return;
     }
 
-    // Coloca na estrutura de dados
+    // Coloca o nome do arquivo na fila 
     enfileirar(nome);
 
-    // Atualiza os cards na tela
+    // Aparece as infomrações dos arquivos na tela
     renderizarFila();
 
-    input.value = "";
+    // Limpa o campo 
+    input.value = ""; 
     input.focus();
-    setStatus("idle");
+    setStatus("idle"); // Atualiza o status da interface 
 }
 
-// Enter também adiciona
+// Enter também adiciona // ACREDITO QUE SEJA OPCIONAL
 document.getElementById("arquivo").addEventListener("keydown", e => {
     if (e.key === "Enter") adicionarUpload();
 });
 
-// ================================================================
-//  Renderiza todos os cards da fila (coluna esquerda)
-// ================================================================
+
+//  Renderiza todos os cards da fila (Parte Esquerda)
+// Desenha a fila na tela 
 function renderizarFila() {
-    const container = document.getElementById("cards-fila");
+    // Container dos cards e mensagem de "fila vazia" // talvez seja opcional
+    const container = document.getElementById("cards-fila"); 
     const vazio     = document.getElementById("fila-vazia");
 
-    // Remove cards antigos
+    // Remove todos os cards antigos // tlaves seja opcional 
     Array.from(container.querySelectorAll(".card-arquivo-fila")).forEach(el => el.remove());
 
+    // Se estiver vazia apresenta a mensgaem na tela 
     if (filaVazia()) {
         vazio.style.display = "";
         return;
