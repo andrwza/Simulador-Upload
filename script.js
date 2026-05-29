@@ -1,113 +1,108 @@
-//  FILA — baseada no conceito em C
+// FILA — baseada no conceito em C
 // Criando uma fila com dados, com um começo e fim
 let fila = {
-    dados: [], // Onde os arquivos vão ficar guardados
-    inicio: 0, // Indica "aponta" para o primeiro item da fila
-    fim: -1 // Indica o último item da fila (-1 porque ainda não tem nenhum elemento dentro dele)
+    dados: [],  // Onde os arquivos vão ficar guardados
+    inicio: 0,  // "Aponta" para o primeiro item da fila
+    fim: -1     // Indica o último item da fila (-1 porque ainda não tem nenhum elemento)
 };
 
-// Função para zerar a fila, para voltar para o estado incial
+// Função para zerar a fila, voltando ao estado inicial
 function inicializarFila() {
     fila.inicio = 0;
     fila.fim = -1;
 }
 
-// Função para verificar se a fila está vazia 
+// Verifica se a fila está vazia
 function filaVazia() {
     return fila.inicio > fila.fim; // Se o início passar do final, não tem nada na fila
-} // Retorna True - Está vazia ou False - Tem itens
+} // Retorna true - está vazia, ou false - tem itens
 
 // Adiciona um item no final da fila
 function enfileirar(valor) {
-    fila.fim++; // Anda uma posição
+    fila.fim++;                  // Anda uma posição
     fila.dados[fila.fim] = valor; // Guarda o valor nessa posição
 }
 
-// Se a fila estiver vazia
+// Remove e retorna o primeiro item da fila
 function desenfileirar() {
-    if (filaVazia()) return null; // Não tem o que tirar, então retorna NULL
-    let valor = fila.dados[fila.inicio]; // Pega o primerio item da fila (o mais antigo da fila) 
-    fila.inicio++; // Move o início para frente 
-    return valor; // Retorna o valor que foi removido 
+    if (filaVazia()) return null; // Não tem o que tirar, retorna null
+    let valor = fila.dados[fila.inicio]; // Pega o primeiro item (o mais antigo)
+    fila.inicio++;                       // Move o início para frente
+    return valor;                        // Retorna o valor removido
 }
 
-//  Controle da Interface
-let processando = false;   // Processametno - Mostra o upload do arquivo
-let totalDone   = 0;       // Conta quantos arquivos já formam conclídos 
+// Controle da interface
+let processando = false; // Indica se há um upload em andamento
+let totalConcluidos = 0; // Conta quantos arquivos já foram concluídos
 
-//  Essa função é chamada quando o usuário manda um arquivo 
-function adicionarUpload() {
-    const input = document.getElementById("arquivo"); // Coleta o campo onde o usuário digitou o nome 
-    const nome  = input.value.trim(); // Remove os espeçços 
+// Chamada quando o usuário adiciona um arquivo à fila
+function adicionarArquivo() {
+    const campo = document.getElementById("arquivo"); // Campo onde o usuário digitou o nome
+    const nome  = campo.value.trim();                 // Remove espaços extras
 
-    if (nome === "") { // Caso o usuário tente realizar o upload sem arquivos no campo // ACREDITO QUE SEJA OPCIONAL
-        alert("Digite o nome do arquivo"); // Recebe alerta 
+    if (nome === "") {
+        alert("Digite o nome do arquivo");
         return;
     }
 
-    // Coloca o nome do arquivo na fila 
+    // Coloca o arquivo na fila
     enfileirar(nome);
 
-    // Aparece as infomrações dos arquivos na tela
+    // Atualiza a tela
     renderizarFila();
 
-    // Limpa o campo 
-    input.value = ""; 
-    input.focus();
+    // Limpa o campo
+    campo.value = "";
+    campo.focus();
 }
 
-// Enter também adiciona // ACREDITO QUE SEJA OPCIONAL
+// Enter também adiciona o arquivo
 document.getElementById("arquivo").addEventListener("keydown", e => {
-    if (e.key === "Enter") adicionarUpload();
+    if (e.key === "Enter") adicionarArquivo();
 });
 
-
-//  Renderiza todos os cards da fila (Parte Esquerda)
-// Desenha a fila na tela 
+// Renderiza todos os cartões da fila (coluna esquerda)
 function renderizarFila() {
-    // Container dos cards e mensagem de "fila vazia" // talvez seja opcional
-    const container = document.getElementById("cards-fila"); 
-    const vazio     = document.getElementById("fila-vazia");
+    const container = document.getElementById("cartoes-fila");
+    const msgVazia  = document.getElementById("fila-vazia");
 
-    // Remove todos os cards antigos // tlaves seja opcional 
-    Array.from(container.querySelectorAll(".card-arquivo-fila")).forEach(el => el.remove());
+    // Remove os cartões antigos antes de redesenhar
+    Array.from(container.querySelectorAll(".cartao-arquivo")).forEach(el => el.remove());
 
-    // Se estiver vazia apresenta a mensgaem na tela 
+    // Se a fila estiver vazia, exibe a mensagem
     if (filaVazia()) {
-        vazio.style.display = "";
+        msgVazia.style.display = "";
         return;
     }
 
-    vazio.style.display = "none";
+    msgVazia.style.display = "none";
 
     for (let i = fila.inicio; i <= fila.fim; i++) {
-        const pos    = i - fila.inicio + 1;          // posição visível (1, 2, 3…)
-        const ehAtivo = (i === fila.inicio && processando);
+        const posicao  = i - fila.inicio + 1;              // Posição visível (1, 2, 3…)
+        const ehAtivo  = (i === fila.inicio && processando); // Primeiro da fila durante o processamento
 
-        const card = document.createElement("div");
-        card.className = "card-arquivo-fila" + (ehAtivo ? " ativo" : "");
-        card.id = "card-" + i;
+        const cartao = document.createElement("div");
+        cartao.className = "cartao-arquivo" + (ehAtivo ? " ativo" : "");
+        cartao.id = "cartao-" + i;
 
-        card.innerHTML = `
-            <div class="card-header">
-                <span class="card-num">${pos}</span>
-                <span class="card-nome">${fila.dados[i]}</span>
+        cartao.innerHTML = `
+            <div class="cabecalho-cartao">
+                <span class="numero-cartao">${posicao}</span>
+                <span class="nome-arquivo">${fila.dados[i]}</span>
             </div>
             <div class="barra-progresso">
-                <div class="barra-fill" id="barra-${i}"></div>
+                <div class="barra-preenchida" id="barra-${i}"></div>
             </div>
         `;
 
-        container.appendChild(card);
+        container.appendChild(cartao);
     }
 }
 
-// ================================================================
-//  Processar Upload (botão da coluna esquerda)
-//  Regra central: só processa 1 arquivo por vez (FIFO)
-// ================================================================
+// Processa o upload do primeiro arquivo da fila (FIFO)
+// Regra central: só processa 1 arquivo por vez
 function processarUpload() {
-    if (processando) return;   // já tem um rodando → ignora
+    if (processando) return; // Já tem um rodando, ignora
     if (filaVazia()) {
         alert("A fila está vazia! Adicione arquivos primeiro.");
         return;
@@ -115,7 +110,7 @@ function processarUpload() {
 
     // Pega o arquivo na frente da fila (sem remover ainda)
     const nomeAtual = fila.dados[fila.inicio];
-    const idxAtual  = fila.inicio;
+    const indiceAtual = fila.inicio;
 
     processando = true;
     renderizarFila();
@@ -125,56 +120,53 @@ function processarUpload() {
     const intervalo = setInterval(() => {
         porcentagem += 5;
 
-        // Atualiza a barra do card ativo
-        const barra = document.getElementById("barra-" + idxAtual);
+        // Atualiza a barra do cartão ativo
+        const barra = document.getElementById("barra-" + indiceAtual);
         if (barra) barra.style.width = porcentagem + "%";
 
         if (porcentagem >= 100) {
             clearInterval(intervalo);
 
-            // Remove da fila (dequeue)
+            // Remove da fila
             desenfileirar();
 
-            // Move o card para o histórico
-            moverParaHistorico(nomeAtual);
+            // Move para o histórico
+            registrarConcluido(nomeAtual);
 
             processando = false;
             renderizarFila();
 
-            // Se ainda há itens, processa o próximo automaticamente
+            // Se ainda há itens na fila, processa o próximo automaticamente
             if (!filaVazia()) {
                 setTimeout(() => processarUpload(), 400);
             }
         }
 
-    }, 150); // velocidade da barra
+    }, 150); // Velocidade da barra de progresso
 }
 
-// ================================================================
-//  Move arquivo concluído para o histórico (coluna direita)
-// ================================================================
-function moverParaHistorico(nome) {
-    totalDone++;
-    document.getElementById("done-vazio").style.display = "none";
+// Move o arquivo concluído para o histórico (coluna direita)
+function registrarConcluido(nome) {
+    totalConcluidos++;
+    document.getElementById("historico-vazio").style.display = "none";
 
     const hora = new Date().toLocaleTimeString("pt-BR", {
         hour: "2-digit", minute: "2-digit", second: "2-digit"
     });
 
-    const lista = document.getElementById("lista-processados");
+    const lista = document.getElementById("lista-concluidos");
 
-    const card = document.createElement("div");
-    card.className = "card-historico";
-    card.innerHTML = `
-        <span class="hist-num">${totalDone}</span>
-        <span class="hist-nome">${nome}</span>
+    const cartao = document.createElement("div");
+    cartao.className = "cartao-concluido";
+    cartao.innerHTML = `
+        <span class="numero-concluido">${totalConcluidos}</span>
+        <span class="nome-concluido">${nome}</span>
+        <span class="hora-conclusao">${hora}</span>
     `;
 
     // Insere no topo (mais recente primeiro)
-    lista.insertBefore(card, lista.firstChild);
+    lista.insertBefore(cartao, lista.firstChild);
 }
 
-// ================================================================
-//  Init
-// ================================================================
+// Init
 inicializarFila();
