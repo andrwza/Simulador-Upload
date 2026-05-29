@@ -27,7 +27,7 @@ function enfileirar(valor) {
 function desenfileirar() {
     if (filaVazia()) return null; // Não tem o que tirar, então retorna NULL
     let valor = fila.dados[fila.inicio]; // Pega o primerio item da fila (o mais antigo da fila) 
-    fila.inicio++; // Move o início para fretne 
+    fila.inicio++; // Move o início para frente 
     return valor; // Retorna o valor que foi removido 
 }
 
