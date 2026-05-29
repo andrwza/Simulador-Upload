@@ -54,7 +54,6 @@ function adicionarUpload() {
     // Limpa o campo 
     input.value = ""; 
     input.focus();
-    setStatus("idle"); // Atualiza o status da interface 
 }
 
 // Enter também adiciona // ACREDITO QUE SEJA OPCIONAL
@@ -93,7 +92,6 @@ function renderizarFila() {
             <div class="card-header">
                 <span class="card-num">${pos}</span>
                 <span class="card-nome">${fila.dados[i]}</span>
-                <span class="card-tag">${ehAtivo ? "Enviando" : "Aguardando"}</span>
             </div>
             <div class="barra-progresso">
                 <div class="barra-fill" id="barra-${i}"></div>
@@ -120,8 +118,7 @@ function processarUpload() {
     const idxAtual  = fila.inicio;
 
     processando = true;
-    renderizarFila();                          // marca card como ativo
-    setStatus("processando", nomeAtual);
+    renderizarFila();
 
     let porcentagem = 0;
 
@@ -147,8 +144,6 @@ function processarUpload() {
             // Se ainda há itens, processa o próximo automaticamente
             if (!filaVazia()) {
                 setTimeout(() => processarUpload(), 400);
-            } else {
-                setStatus("concluido");
             }
         }
 
@@ -160,7 +155,6 @@ function processarUpload() {
 // ================================================================
 function moverParaHistorico(nome) {
     totalDone++;
-    document.getElementById("badge-done").textContent = totalDone;
     document.getElementById("done-vazio").style.display = "none";
 
     const hora = new Date().toLocaleTimeString("pt-BR", {
@@ -172,34 +166,12 @@ function moverParaHistorico(nome) {
     const card = document.createElement("div");
     card.className = "card-historico";
     card.innerHTML = `
-        <span class="hist-num">#${totalDone}</span>
-        <span class="hist-check">✓</span>
+        <span class="hist-num">${totalDone}</span>
         <span class="hist-nome">${nome}</span>
-        <span class="hist-hora">${hora}</span>
     `;
 
     // Insere no topo (mais recente primeiro)
     lista.insertBefore(card, lista.firstChild);
-}
-
-// ================================================================
-//  Status box (centro)
-// ================================================================
-function setStatus(tipo, nome) {
-    const dot = document.getElementById("status-dot");
-    const msg = document.getElementById("status-msg");
-
-    if (tipo === "processando") {
-        dot.className = "status-dot processando";
-        msg.textContent = `Enviando: ${nome}`;
-    } else if (tipo === "concluido") {
-        dot.className = "status-dot concluido";
-        msg.textContent = `${totalDone} arquivo(s) processado(s) com sucesso`;
-    } else {
-        dot.className = "status-dot";
-        const qtd = filaVazia() ? 0 : (fila.fim - fila.inicio + 1);
-        msg.textContent = qtd > 0 ? `${qtd} arquivo(s) na fila` : "Aguardando arquivos...";
-    }
 }
 
 // ================================================================
