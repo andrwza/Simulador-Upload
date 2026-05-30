@@ -18,7 +18,6 @@ function enfileirar(valor) {
     fila.dados[fila.fim] = valor; 
 }
 
-
 function desenfileirar() {
     if (filaVazia()) return null; 
     let valor = fila.dados[fila.inicio]; 
@@ -80,7 +79,6 @@ function renderizarFila() {
                 <div class="barra-preenchida" id="barra-${i}"></div>
             </div>
         `;
-
         container.appendChild(cartao);
     }
 }
@@ -120,7 +118,6 @@ function processarUpload() {
                 setTimeout(() => processarUpload(), 400);
             }
         }
-
     }, 150); 
 }
 
