@@ -1,7 +1,7 @@
 let fila = {
-    dados: [],  
-    inicio: 0,  
-    fim: -1     
+    dados: [],
+    inicio: 0,
+    fim: -1
 };
 
 function inicializarFila() {
@@ -11,26 +11,26 @@ function inicializarFila() {
 
 function filaVazia() {
     return fila.inicio > fila.fim;
-} 
+}
 
 function enfileirar(valor) {
-    fila.fim++;              
-    fila.dados[fila.fim] = valor; 
+    fila.fim++;
+    fila.dados[fila.fim] = valor;
 }
 
 function desenfileirar() {
-    if (filaVazia()) return null; 
-    let valor = fila.dados[fila.inicio]; 
-    fila.inicio++;                       
-    return valor;                       
+    if (filaVazia()) return null;
+    let valor = fila.dados[fila.inicio];
+    fila.inicio++;
+    return valor;
 }
 
-let processando = false; 
-let totalConcluidos = 0; 
+let processando = false;
+let totalConcluidos = 0;
 
 function adicionarArquivo() {
-    const campo = document.getElementById("arquivo"); 
-    const nome  = campo.value.trim();               
+    const campo = document.getElementById("arquivo");
+    const nome  = campo.value.trim();
 
     if (nome === "") {
         alert("Digite o nome do arquivo");
@@ -63,8 +63,8 @@ function renderizarFila() {
     msgVazia.style.display = "none";
 
     for (let i = fila.inicio; i <= fila.fim; i++) {
-        const posicao  = i - fila.inicio + 1;              
-        const ehAtivo  = (i === fila.inicio && processando); 
+        const posicao  = i - fila.inicio + 1;
+        const ehAtivo  = (i === fila.inicio && processando);
 
         const cartao = document.createElement("div");
         cartao.className = "cartao-arquivo" + (ehAtivo ? " ativo" : "");
@@ -84,7 +84,7 @@ function renderizarFila() {
 }
 
 function processarUpload() {
-    if (processando) return; 
+    if (processando) return;
     if (filaVazia()) {
         alert("A fila está vazia! Adicione arquivos primeiro.");
         return;
@@ -118,7 +118,7 @@ function processarUpload() {
                 setTimeout(() => processarUpload(), 400);
             }
         }
-    }, 150); 
+    }, 150);
 }
 
 function registrarConcluido(nome) {
