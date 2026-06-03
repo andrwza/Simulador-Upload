@@ -19,7 +19,7 @@ Front-end desenvolvido utilizando somente HTML+CSS vanilla facilitando o entendi
 
 Para melhor otimização do desenvolvimento do projeto, o protótipo abaixo foi desenvolvido para centralizar as ideias do grupo mostrando um fluxo entre os processos do código.
 
-![Projeto Final - Simulador de Fila - image1.png](projetofinal-simuladordefila-image1.png)
+![Projeto Final - Simulador de Fila - image1.png](assets/projetofinal-simuladordefila-image1.png)
 
 # Back-End + Lógica
 
@@ -63,23 +63,23 @@ function desenfileirar() {
 
 O objeto `fila` é composto por três atributos: `dados`, que armazena os elementos; `inicio`, que aponta para o primeiro elemento da fila; e `fim`, que aponta para o último. Na inicialização, `inicio` recebe `0` e `fim` recebe `-1`,  essa combinação indica fila vazia, já que `fim < inicio` é a condição verificada por `filaVazia()`.
 
-![[projetofinal-simuladordefila-image2.png]]
+![projetofinal-simuladordefila-image2.png](assets/projetofinal-simuladordefila-image2.png)
 
 ### Enfileiramento
 
 Ao chamar `enfileirar(valor)`, o atributo `fim` é incrementado em 1 e o valor é inserido na posição `dados[fim]`. Em uma fila com um único elemento, `inicio` e `fim` apontam para o mesmo índice. A cada novo elemento adicionado, apenas `fim` avança, preservando a referência ao início da fila.
 
-![[projetofinal-simuladordefila-image4.png]]
+![projetofinal-simuladordefila-image4.png](assets/projetofinal-simuladordefila-image4.png)
 
 Exemplo adicionando mais elementos:
 
-![projetofinal-simuladordefila-image3.png](projetofinal-simuladordefila-image3.png)
+![projetofinal-simuladordefila-image3.png](assets/projetofinal-simuladordefila-image3.png)
 
 ### Desenfileiramento
 
 A remoção segue o modelo **FIFO** (_First In, First Out_): ao chamar `desenfileirar()`, o elemento em `dados[inicio]` é retornado e `inicio` é incrementado em 1, descartando-o da fila. O `fim` não se altera, apenas a "janela" de elementos válidos se estreita pelo início.
 
-![[projetofinal-simuladordefila-image5.png]]
+![projetofinal-simuladordefila-image5.png](assets/projetofinal-simuladordefila-image5.png)
 
 ---
 ## Interações com o DOM
@@ -211,7 +211,7 @@ function registrarConcluido(nome) {
 
 Na coluna esquerda, o usuário digita o nome de um arquivo e o adiciona à fila pelo botão ou pressionando **Enter**. A coluna central exibe a fila em tempo real, cada arquivo aparece como um cartão com sua posição, nome e barra de progresso. O botão _Processar upload_ inicia o processamento sequencial. A coluna direita registra o histórico de arquivos concluídos, sempre com o mais recente no topo.
 
-![[projetofinal-simuladordefila-image6.png]]
+![projetofinal-simuladordefila-image6.png](assets/projetofinal-simuladordefila-image6.png)
 
 ## Estilização
 
@@ -239,5 +239,6 @@ Agradecemos ao professor **Carlos Henrique da Silva Santos** pela condução da 
 ---
 ## Autores
 
+| <img src="https://github.com/Ramos902.png" width="80px" style="border-radius:50%"/> | <img src="https://github.com/andrwza.png" width="80px" style="border-radius:50%"/> |
+|---|---|
 | [Ramos](https://github.com/Ramos902) | [Andreza](https://github.com/andrwza) |
-| ------------------------------------ | ------------------------------------- |
