@@ -241,9 +241,17 @@ Agradecemos ao professor **Carlos Henrique da Silva Santos** pela condução da 
 
 <table>
   <tr>
-    <td align="center"><a href="https://github.com/andrwza"><img src="https://github.com/andrwza.png" width="80" height="80" style="border-radius:50%"/><br><sub>Andreza</sub></a></td>
-    <td align="center"><a href="https://github.com/Buenno0"><img src="https://github.com/Buenno0.png" width="80" height="80" style="border-radius:50%"/><br><sub>Mateus</sub></a></td>
-    <td align="center"><a href="https://github.com/FernandoNino38"><img src="https://github.com/FernandoNino38.png" width="80" height="80" style="border-radius:50%"/><br><sub>Fernando</sub></a></td>
-    <td align="center"><a href="https://github.com/Ramos902"><img src="https://github.com/Ramos902.png" width="80" height="80" style="border-radius:50%"/><br><sub>Ramos</sub></a></td>
+    <td align="center">
+      <a href="https://github.com/Ramos902">
+        <img src="https://github.com/Ramos902.png" width="80" height="80" style="border-radius:50%"/>
+        <br><sub>Ramos</sub>
+      </a>
+    </td>
+    <td align="center">
+      <a href="https://github.com/andrwza">
+        <img src="https://github.com/andrwza.png" width="80" height="80" style="border-radius:50%"/>
+        <br><sub>Andreza</sub>
+      </a>
+    </td>
   </tr>
 </table>
